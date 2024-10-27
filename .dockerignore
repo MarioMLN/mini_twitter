@@ -1,0 +1,15 @@
+# Git
+.git
+.gitignore
+
+# Docker
+.docker
+
+# Python
+mini_twitter/__pycache__/
+mini_twitter/*/__pycache__/
+mini_twitter/*/*/__pycache__/
+mini_twitter/*/*/*/__pycache__/
+.env/
+.venv/
+venv/

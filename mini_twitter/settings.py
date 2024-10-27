@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework.authtoken',
-    'dj_rest_auth',
+    # 'dj_rest_auth',
     'user',
     'feed'
 ]
