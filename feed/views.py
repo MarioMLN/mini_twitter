@@ -66,7 +66,7 @@ class FollowView(generics.UpdateAPIView):
 
         return self.request.user
 
-    def update(self, serializer):
+    def update(self):
         user_to_follow = User.objects.get(id=self.kwargs['pk'])
         if self.request.user == user_to_follow:
             return Response(

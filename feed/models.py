@@ -31,7 +31,7 @@ class PostContent(models.Model):
         Post,
         on_delete=models.CASCADE
     )
-    text = models.CharField(null=True, blank=True)
+    text = models.CharField(max_length=255, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
 
     class Meta:

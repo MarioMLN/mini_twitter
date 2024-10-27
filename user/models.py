@@ -8,11 +8,9 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True)
     followers = models.ManyToManyField(
-        "user.User",
-        related_name='followers',
-        null=True,
-        blank=True,
-        editable=False
+        'self',
+        related_name='following',
+        symmetrical=False
     )
 
     class Meta:
