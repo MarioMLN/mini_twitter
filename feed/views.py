@@ -97,7 +97,10 @@ class FeedView(generics.ListAPIView):
     pagination_class = FeedPagination
 
     def get_queryset(self):
-        following_users_ids = self.request.user.followers.values_list('id', flat=True)
+        following_users_ids = self.request.user.followers.values_list(
+            'id',
+            flat=True
+        )
         queryset = Post.objects.filter(user__id__in=following_users_ids)
 
         return queryset

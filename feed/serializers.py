@@ -20,7 +20,10 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['user', 'created_at', 'like_count', 'post_content_serializer']
+        fields = ['user',
+                  'created_at',
+                  'like_count',
+                  'post_content_serializer']
         read_only_fields = ['user', 'created_at', 'like_count']
 
     def validate(self, attrs):
