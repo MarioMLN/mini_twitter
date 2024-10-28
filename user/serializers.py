@@ -1,6 +1,8 @@
 from rest_framework import serializers
-from .models import User
+from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
+
+from user.models import Follow
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -9,11 +11,10 @@ class UserSerializer(serializers.ModelSerializer):
         required=True,
         validators=[validate_password]
     )
-    followers_count = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'followers_count')
+        fields = ('username', 'email', 'password')
 
     def create(self, validated_data):
         user = User.objects.create(
@@ -24,5 +25,25 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-    def get_followers_count(self, obj):
-        return obj.followers.count()
+
+class FollowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Follow
+        fields = ['id', 'follower', 'following', 'created_at']
+        read_only_fields = ['id', 'created_at']
+
+    def validate(self, attrs):
+        if attrs['follower'] == attrs['following']:
+            raise serializers.ValidationError("Você não pode seguir a si mesmo.")
+        return attrs
+
+    def create(self, validated_data):
+        follower = validated_data['follower']
+        following = validated_data['following']
+
+        follow_instance, created = Follow.objects.get_or_create(follower=follower, following=following)
+
+        if not created:
+            raise serializers.ValidationError("Você já está seguindo este usuário.")
+
+        return follow_instance
