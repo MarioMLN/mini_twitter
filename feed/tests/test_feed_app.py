@@ -44,7 +44,6 @@ class PostTestCase(APITestCase):
         self.post_url = reverse('post', kwargs={'pk': self.post.pk})
         response = self.client.delete(self.post_url)
 
-
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
         self.assertFalse(Post.objects.filter(pk=self.post.pk).exists())
@@ -78,7 +77,6 @@ class UserFeedTestCase(APITestCase):
             "text": "User2's post"
         }
         self.client.post(reverse('post'), data, format='json')
-
 
         self.feed_url = reverse('feed')
 
